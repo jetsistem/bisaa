@@ -1,0 +1,8 @@
+{
+  "name": "Remix Tan Sağtürk Akademi — İnteraktif Sahne \u0026 Sanat Deneyimi",
+  "description": "Bale, dans ve müzik eğitiminde 27 yıllık deneyim; GSAP ScrollTrigger sabitleme, katmanlı sahne geçişleri ve interaktif branş keşfi ile tasarlanmış sanat akademisi web deneyimi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

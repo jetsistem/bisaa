@@ -1,0 +1,56 @@
+# ==============================================================================
+# Bissa Akademi — cPanel Apache / LiteSpeed Subdomain Yapılandırması (.htaccess)
+# ==============================================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Opsiyonel: Otomatik HTTPS yönlendirmesi (cPanel AutoSSL aktifse önerilir)
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP_HOST} !^localhost [NC]
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Mevcut dosya veya klasör varsa doğrudan sun (görseller, css, js vb.)
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Diğer tüm istekleri SPA yapısı gereği index.html'e yönlendir
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Varsayılan karakter seti ve indeks dosyası
+AddDefaultCharset UTF-8
+DirectoryIndex index.html
+
+# Dizin listelemeyi kapat (güvenlik)
+Options -Indexes
+
+# MIME Türleri
+<IfModule mod_mime.c>
+  AddType application/javascript .js .mjs
+  AddType text/css .css
+  AddType image/svg+xml .svg .svgz
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+  AddType application/manifest+json .webmanifest .json
+</IfModule>
+
+# GZIP / Deflate Sıkıştırma (Hızlı açılış için)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/javascript application/json image/svg+xml
+</IfModule>
+
+# Tarayıcı Önbellekleme (Statik varlıklar için 1 yıl, HTML için anlık güncelleme)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
